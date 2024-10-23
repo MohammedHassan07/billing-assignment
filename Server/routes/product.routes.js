@@ -9,7 +9,7 @@ route.post('/add', isEmpty, addProduct)
 
 route.get('/view', viewProduct)
 
-route.get('/edit/:id', isEmpty, editProduct)
+route.post('/edit/:id', isEmpty, editProduct)
 
 route.get('/delete/:id', deleteProduct)
 

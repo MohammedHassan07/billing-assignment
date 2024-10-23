@@ -5,9 +5,11 @@ module.exports = async function checkUnique(req, res, next) {
 
     const { contact } = req.body
 
-    const user = await customerModel.find({ contact })
+    const user = await customerModel.findOne({ contact })
 
-    if (user.lenght !== 0) return res.status(400).json({ message: `User is already present with ${contact}` })
+    if (user) return res.status(400).json({ message: `User is already present with ${contact}` })
+    else {
 
-    next()
+        next()
+    }
 } 
