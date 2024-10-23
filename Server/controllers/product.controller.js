@@ -5,9 +5,10 @@ const addProduct = async (req, res) => {
 
     try {
 
-        const { productName, productPrince, quantity, brand, suplier, oldStock, productcategory } = req.body
+        // console.log(req.body)
+        const { productName, productPrice, quantity, brand, suplier, oldStock, productcategory } = req.body
 
-        const product = new productModel({ productName, productPrince, quantity, brand, suplier, oldStock, productcategory })
+        const product = new productModel({ productName, productPrice, quantity, brand, suplier, oldStock, productcategory })
 
         const saved = await product.save()
 

@@ -21,23 +21,13 @@ const createBill = async (req, res) => {
             if (!product) {
                 return res.status(404).json({ message: `Product not found with id: ${item.productId}` })
             }
-
-            console.log(product)
-            console.log(typeof product.productPrice)
-            if (typeof product.productPrice !== 'number' || typeof quantity !== 'number' || quantity <= 0) {
-                return res.status(400).json({ message: `Invalid price or quantity for product ID: ${item.productId}` })
-            }
-
+        
             totalAmount += product.productPrice * item.quantity
 
             billingProducts.push({
                 product: item.productId,
-                quantity,
+                quantity: item.quantity,
             })
-        }
-
-        if (isNaN(totalAmount) || totalAmount < 0) {
-            return res.status(400).json({ message: 'Invalid total amount calculated.' })
         }
 
         const newBilling = new billingModel({
