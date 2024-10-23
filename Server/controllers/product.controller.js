@@ -58,6 +58,7 @@ const editProduct = async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 }
+
 // Function to delete product
 const deleteProduct = async (req, res) => {
     try {

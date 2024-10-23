@@ -15,6 +15,8 @@ app.listen(PORT, () => {
 
 const cusomterRoute = require('./routes/cusomter.routes')
 const productRoute = require('./routes/product.routes')
+const billingRoute = require('./routes/billing.routes')
 
 app.use('/customer', cusomterRoute)
 app.use('/product', productRoute)
+app.use('/bill', billingRoute)
