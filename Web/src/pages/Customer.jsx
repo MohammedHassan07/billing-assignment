@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { getRequest, postRequest } from '../utils/networkRequest.js'
 
 const Customer = () => {
 
@@ -6,6 +7,21 @@ const Customer = () => {
     const [email, setEmail] = useState('')
     const [contact, setCOntact] = useState('')
     const [gender, setGender] = useState('')
+    const [customers, setCustomers] = useState([])
+
+
+    async function getAllCustomer() {
+        const response = await getRequest('customer/view', 'GET')
+        setCustomers(response)
+    }
+
+    useEffect(() => {
+
+        // getAllCustomer()
+
+    }, [])
+
+
 
     function handleChange(e, type) {
 
@@ -36,21 +52,8 @@ const Customer = () => {
     async function handleAddCustomer() {
 
         const data = { name, email, contact, gender }
-        try {
-            const res = await fetch('', {
 
-                headers: {
-
-                    'Content-Type': 'application/json'
-                },
-                body: data
-            })
-
-            const response = await res.json()
-            console.log(respone)
-        } catch (error) {
-            console.log(error)
-        }
+        const response = await postRequest('/customer/add', 'POST', data)
     }
 
     return (
@@ -72,7 +75,26 @@ const Customer = () => {
             </aside>
 
             {/* main */}
-            <main className='w-[100%] bg-red-300'>
+            <main className='w-[100%] bg-red-300 flex items-center justify-center flex-wrap'>
+
+
+                {customers.map((customer, key) => (
+                    <div key={customer.id} className="bg-slate-200 border-blue-500 border-2 rounded-lg flex flex-col justify-evenly items-center w-1/6 h-48 hover:cursor-pointer">
+                        <div className="text-3xl text-blue-500">
+                            <h3>{customer.name}</h3>
+                        </div>
+                        <div className="text-lg">
+                            <h4>{customer.email}</h4>
+                        </div>
+                        <div className="text-lg">
+                            <h4>{customer.contact}</h4>
+                        </div>
+                        <div className="text-lg">
+                            <h4>{customer.gender}</h4>
+                        </div>
+                    </div>
+                ))}
+
 
             </main>
 

@@ -1,10 +1,13 @@
 const express = require('express')
 const dotenv = require('dotenv')
 const connectDB = require('./config/connectDB')
+const cors = require('cors')
 dotenv.config()
 
 const app = express()
 
+const option = { origin: '*' }
+app.use(cors({ option }))
 app.use(express.json())
 
 const PORT = process.env.PORT
