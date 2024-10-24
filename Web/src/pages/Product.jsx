@@ -18,6 +18,7 @@ const Product = () => {
     console.log(id)
     const response = await getRequest(`/product/delete/${id}`)
     console.log(response)
+    alert(response.message)
 }
   useEffect(() => {
 
