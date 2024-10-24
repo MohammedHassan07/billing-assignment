@@ -11,8 +11,6 @@ const Customer = () => {
     const [customers, setCustomers] = useState([])
     const [response, setResponse] = useState({})
 
-
-
     useEffect(() => {
 
         async function getAllCustomer() {
@@ -23,8 +21,7 @@ const Customer = () => {
 
         getAllCustomer()
 
-    }, [handleAddCustomer])
-
+    }, [])
 
 
     function handleChange(e, type) {
@@ -86,11 +83,11 @@ const Customer = () => {
             </aside>
 
             {/* main */}
-            <main className='w-[100%] flex flex-wrap h-screen items-start p-6 gap-4'>
+            <main className='w-[100%] h-screen flex flex-wrap items-start justify-start p-6 gap-4'>
 
-                {customers.map((customer, key) => (
+                {customers.map((customer) => (
 
-                    <Card customer={customer} key={key}/>
+                    < Card customer = { customer }/>
                 ))}
 
 

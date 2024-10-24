@@ -28,8 +28,8 @@ const viewProduct = async (req, res) => {
     try {
 
         const products = await productModel.find()
-        console.log(products)
-        if (products.length !== 0) return res.status(200).json({ products })
+        // console.log(products)
+        if (products.length !== 0) return res.status(200).json({ data:products })
         else return res.status(404).json({ message: 'No product found' })
 
     } catch (error) {

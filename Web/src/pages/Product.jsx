@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { postRequest } from '../utils/networkRequest'
+import { postRequest, getRequest } from '../utils/networkRequest'
+import ProductCard from '../components/ProductCard.jsx'
 
 const Product = () => {
 
-  const [products, setProducts] = useState({})
+  const [products, setProducts] = useState([])
   const [response, setResponse] = useState({})
   const [productName, setProductName] = useState('')
   const [productPrice, setProductPrice] = useState('')
@@ -13,27 +14,31 @@ const Product = () => {
   const [oldStock, setOldStock] = useState('')
   const [category, setCategory] = useState('')
 
-
+  async function handleDeleteCard(id) {
+    console.log(id)
+    const response = await getRequest(`/product/delete/${id}`)
+    console.log(response)
+}
   useEffect(() => {
 
     async function getAllProducts() {
 
-      const response = await getRequest('/customer/view')
-      console.log(response)
-      setProducts(response.products);
+      const response = await getRequest('/product/view')
+      console.log(response.data)
+      setProducts(response.data)
     }
 
-    // getAllProducts()
+    getAllProducts()
 
-  }, [handleAddProduct])
+  }, [])
 
   async function handleAddProduct() {
-    
+
     const data = { productName, productPrice, quantity, brand, suplier, oldStock, category }
-    
+
     const response = await postRequest('/product/add', data)
     setResponse(response)
-    
+
     setTimeout(() => {
 
       setResponse({})
@@ -109,12 +114,15 @@ const Product = () => {
       </aside>
 
       {/* main */}
-      <main className='w-[100%] flex flex-wrap h-screen items-start p-6 gap-4'>
+      <main className='w-[100%] h-screen flex flex-wrap items-start justify-start p-6 gap-4'>
 
-        {/* {products.map((product, key) => (
 
-          <Card product={product} key={key} />
-        ))} */}
+
+        {products ? products.map((product) => (
+          <ProductCard key={product._id} product={product} handleDeleteCard={handleDeleteCard}/>
+        )) : 
+        <h1>No product found</h1>
+        }
 
       </main>
 
