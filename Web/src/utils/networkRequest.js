@@ -1,6 +1,6 @@
 const BASE_RUL = import.meta.env.VITE_BASE_URL
 
-async function postRequest(url, method, data) {
+async function postRequest(url, data) {
 
     const URL = BASE_RUL + url
     console.log(URL)
@@ -8,15 +8,17 @@ async function postRequest(url, method, data) {
     try {
         const res = await fetch(URL, {
 
+            method: 'POST',
+
             headers: {
 
                 'Content-Type': 'application/json'
             },
-            body: data
+            body: JSON.stringify(data)
         })
 
         const response = await res.json()
-        console.log(response)
+        // console.log(response)
 
         return response
     } catch (error) {
@@ -25,7 +27,7 @@ async function postRequest(url, method, data) {
 }
 
 
-async function getRequest(url, method) {
+async function getRequest(url) {
 
     const URL = BASE_RUL + url
     try {
@@ -39,7 +41,9 @@ async function getRequest(url, method) {
         })
 
         const response = await res.json()
-        console.log(response)
+        // console.log(response)
+
+        return response
     } catch (error) {
         console.log(error)
     }

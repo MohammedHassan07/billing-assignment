@@ -8,16 +8,19 @@ const Customer = () => {
     const [contact, setCOntact] = useState('')
     const [gender, setGender] = useState('')
     const [customers, setCustomers] = useState([])
+    const [response, setResponse] = useState({})
 
 
-    async function getAllCustomer() {
-        const response = await getRequest('customer/view', 'GET')
-        setCustomers(response)
-    }
 
     useEffect(() => {
 
-        // getAllCustomer()
+        async function getAllCustomer() {
+
+            const response = await getRequest('/customer/view')
+            setCustomers(response.customers);
+        }
+
+        getAllCustomer()
 
     }, [])
 
@@ -53,7 +56,12 @@ const Customer = () => {
 
         const data = { name, email, contact, gender }
 
-        const response = await postRequest('/customer/add', 'POST', data)
+        const response = await postRequest('/customer/add', data)
+        setResponse(response)
+        setTimeout(()=> {
+
+            setResponse({})
+        }, 2000)
     }
 
     return (
@@ -70,27 +78,28 @@ const Customer = () => {
 
                 <input onChange={(e) => { handleChange(e, 'gender') }} className='bg-slate-200 px-3 py-1 border-2 border-blue-500 rounded-md text-black focus:outline-none w-full' type="text" placeholder='gender' />
 
-                <button onClick={handleAddCustomer} className='rounded  border-blue-600 p-1 px-3 mx-1 hover:bg-blue-500 hover:text-white shadow-lg'>Add Cusotmer</button>
+                <p className='text-white'>{response.message}</p>
+
+                <button onClick={handleAddCustomer} className='rounded  border-blue-600 p-1 px-3 mx-1 hover:bg-blue-500 hover:text-white shadow-lg'>Add Customer</button>
 
             </aside>
 
             {/* main */}
-            <main className='w-[100%] bg-red-300 flex items-center justify-center flex-wrap'>
-
+            <main className='w-[100%] flex flex-wrap h-screen items-start p-6 gap-4'>
 
                 {customers.map((customer, key) => (
-                    <div key={customer.id} className="bg-slate-200 border-blue-500 border-2 rounded-lg flex flex-col justify-evenly items-center w-1/6 h-48 hover:cursor-pointer">
-                        <div className="text-3xl text-blue-500">
-                            <h3>{customer.name}</h3>
-                        </div>
-                        <div className="text-lg">
-                            <h4>{customer.email}</h4>
-                        </div>
-                        <div className="text-lg">
-                            <h4>{customer.contact}</h4>
-                        </div>
-                        <div className="text-lg">
-                            <h4>{customer.gender}</h4>
+
+                    <div key={customer._id}
+                        className="bg-slate-200 border-blue-500 border-2 rounded-lg flex flex-col justify-evenly  w-1/4 h-48 hover:cursor-pointer p-4">
+
+                        <div className='flex'>
+
+                            <div className="text-lg">
+                                <p className='mt-4'>Name: {customer.name}</p>
+                                <p className='mt-4'>Email: {customer.email}</p>
+                                <p className='mt-4'>Contact: {customer.contact}</p>
+                                <p className='mt-4'>Gender: {customer.gender}</p>
+                            </div>
                         </div>
                     </div>
                 ))}
