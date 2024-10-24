@@ -28,8 +28,8 @@ const viewProduct = async (req, res) => {
     try {
 
         const products = await productModel.find()
-
-        if (products.length !== 0) return res.status(200).json({products})
+        console.log(products)
+        if (products.length !== 0) return res.status(200).json({ products })
         else return res.status(404).json({ message: 'No product found' })
 
     } catch (error) {
@@ -47,7 +47,7 @@ const editProduct = async (req, res) => {
         const updatedProduct = await productModel.findByIdAndUpdate(
             id,
             { productName, productPrice, quantity, brand, supplier, oldStock, productCategory },
-            { new: true } 
+            { new: true }
         )
 
         if (!updatedProduct) return res.status(404).json({ message: 'Product not found' })

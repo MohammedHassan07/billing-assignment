@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getRequest, postRequest } from '../utils/networkRequest.js'
+import Card from '../components/Card.jsx'
 
 const Customer = () => {
 
@@ -22,7 +23,7 @@ const Customer = () => {
 
         getAllCustomer()
 
-    }, [])
+    }, [handleAddCustomer])
 
 
 
@@ -58,7 +59,7 @@ const Customer = () => {
 
         const response = await postRequest('/customer/add', data)
         setResponse(response)
-        setTimeout(()=> {
+        setTimeout(() => {
 
             setResponse({})
         }, 2000)
@@ -89,19 +90,7 @@ const Customer = () => {
 
                 {customers.map((customer, key) => (
 
-                    <div key={customer._id}
-                        className="bg-slate-200 border-blue-500 border-2 rounded-lg flex flex-col justify-evenly  w-1/4 h-48 hover:cursor-pointer p-4">
-
-                        <div className='flex'>
-
-                            <div className="text-lg">
-                                <p className='mt-4'>Name: {customer.name}</p>
-                                <p className='mt-4'>Email: {customer.email}</p>
-                                <p className='mt-4'>Contact: {customer.contact}</p>
-                                <p className='mt-4'>Gender: {customer.gender}</p>
-                            </div>
-                        </div>
-                    </div>
+                    <Card customer={customer} key={key}/>
                 ))}
 
 
